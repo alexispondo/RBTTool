@@ -6,10 +6,8 @@ Linkedin: https://www.linkedin.com/in/alexis-pondo/
 from datetime import datetime
 import os
 from pathlib import Path
-from time import sleep
 import tempfile
 import itertools as IT
-import random
 import hashlib
 import magic
 
