@@ -3,6 +3,7 @@ Coded By Alexis Pondo
 Github: http://github.com/alexispondo/
 Linkedin: https://www.linkedin.com/in/alexis-pondo/
 """
+from datetime import datetime
 import os
 from pathlib import Path
 from time import sleep
@@ -10,6 +11,8 @@ import tempfile
 import itertools as IT
 import random
 import hashlib
+import magic
+
 
 Black = "\u001b[30m"
 Red = "\u001b[31m"
@@ -21,7 +24,7 @@ Cyan = "\u001b[36m"
 White = "\u001b[37m"
 Reset = "\u001b[0m"
 
-
+Underline = "\u001b[4m"
 #################################################################################################################################################################
 ####################### Somme importante function
 #################################################################################################################################################################
@@ -34,6 +37,14 @@ def clear_term():
     except:
         os.system("cls") # On windows
 #################################################################################################################################################################
+
+def get_encoding(file):
+    try:
+        return magic.Magic(mime_encoding=True).from_file(file)
+    except:
+        print("encoding not found for "+ file)
+        print("We will use ISO-8859-1")
+        return "ISO-8859-1"
 
 
 # Annimation (progress_barre)
@@ -143,9 +154,17 @@ def choice_hash():
 
 99= return
 """)
-        print("\nIf you want to choice multiple algorithm you can do this by separating number with space. ex: >>> 1 2 3 (For choice md4, md5 and md5-sha1)")
+        print("\nIf you want to choice multiple algorithm you can do this by separating number with space. \n"
+              "ex: >>> 1 2 3 (For choice md4, md5 and md5-sha1)\n"
+              "If you want to choose all algorithm you should enter \"all\"\n"
+              "ex: all (For choice all algorithm)")
         hash0 = input(">>> ") # We enter our hashs chooses
-        list_hash = hash0.split(" ") # We change our chooses in list. ex: 1 2 3 will be ["1", "2", "3"]
+
+
+        if hash0 == "all": # If we want all algorithm
+            list_hash = [str(i) for i in range(1,20)] # Take all algorithm
+        else: # Else
+            list_hash = hash0.split(" ") # We change our chooses in list. ex: 1 2 3 will be ["1", "2", "3"]
         if list_hash != ["99"]: # If we have not choose return
             for hash in list_hash: # For each items
                 try:
@@ -183,7 +202,8 @@ def choice_dictionary_file():
 # function to hash dictionary with the list of hash algo
 # It takes in argument list of algo and dictionary path
 def hash_dictionary(list_algo, dict_path):
-    with open(dict_path, "rb") as dict_base: # We open Dictionary file
+    encoding = get_encoding(dict_path)
+    with open(dict_path, "r", encoding=encoding, errors='ignore') as dict_base: # We open Dictionary file
         passwords = dict_base.readlines() # We read all lines il the list passwords
         file_name_base = dict_path.split("/")[-1] # we take basename of dictionary
         current_dir = os.getcwd() # We get current directory
@@ -191,26 +211,29 @@ def hash_dictionary(list_algo, dict_path):
         if not os.path.exists(rbt_list_dir): # We check if directory exist
             os.mkdir(rbt_list_dir) # Else we create it
 
+        start_time = str(datetime.now()).split(".")[0]
+        print(Red+"\n\n"+start_time+": Starting..."+Cyan)
         algo_num = 0 # we initialize algo number at 0
         for algo_hash in list_algo: # we take each algo of the list algo
             algo_num = algo_num + 1 # we increment algo number of 1
-            print("\n\nStart creation of "+algo_hash+" rainbow table: ["+str(algo_num)+"/"+str(len(list_algo))+"]:")
+            print("\n[*] Start creation of "+algo_hash+" rainbow table: ["+str(algo_num)+"/"+str(len(list_algo))+"]:\n==> ", end="")
+            #print()
             end_file_name = rbt_list_dir+"/rbt_"+algo_hash+"_"+file_name_base # We create output filename
             end_file_name = uniquify(end_file_name) # We check if this filename is not exist. If it exists we will increment it
-            with open(end_file_name, "w") as dict_rbt: # We create new file for algo
+            with open(end_file_name, "w", encoding=encoding) as dict_rbt: # We create new file for algo
                 i = 0 # We initialize password number at 0
                 for passw in passwords: # For each password in passwords list
-                    try:
+                    """try:
                         passw = passw.decode("utf-8") # Try to decode it from bytes to utf-8
                     except:
-                        passw = "I_can_not_decode_this_password\n" # Use this if it can not decode
+                        passw = "I_can_not_decode_this_password\n" # Use this if it can not decode"""
                     passwd = passw.split("\n")[0] # take only password without "\n"
                     passwd_hash = hashlib.new(algo_hash, passwd.encode()).hexdigest() # Hash it with algo hash and password encoded in bytes and return hex value
                     line = passwd_hash + "\t\t" + passwd + "\n" # Create a new line for the new file
                     #print(line)
                     dict_rbt.writelines(line) # Add this line in the rainbow table file
 
-                    try:
+                    """try:
                         # For animation
                         i = i + 1  # Increment number of password
                         i1 = int((i * 100) / len(passwords))  # Change it in percentage
@@ -218,10 +241,12 @@ def hash_dictionary(list_algo, dict_path):
                         sleep(0.1)  # Sleep
                         ####################################################################
                     except:
-                        pass  # Some terminals don't like animation
+                        pass  # Some terminals don't like animation"""
 
-            print("\nThe Rainbow Table Output for "+ Yellow+algo_hash+Cyan+ " algorithm can be found in: "+ Yellow+ end_file_name+ Cyan)
-    input("Tap Enter to finish: ") # Wait Enter to continue
+            print("The Rainbow Table Output for "+ Magenta+algo_hash+Cyan+ " algorithm can be found in: "+ Magenta+ end_file_name+ Cyan)
+        end_time = str(datetime.now()).split(".")[0]
+        print(Red+"\n"+end_time + ": End"+Cyan)
+    input("\n\nTap Enter to finish: ") # Wait Enter to continue
 #################################################################################################################################################################
 
 # Main function to create rainbow tables
@@ -263,9 +288,9 @@ def create_rbt():
             algo.append(hash) # Append hash
     dict_path = choice_dictionary_file() # Chose dictionary file
     print(Yellow+"""
-We will apply """+Blue+", ".join(algo)+Yellow+""" algorithms in the """+Blue+dict_path.split("/")[-1]+Yellow+""" dictionary to get our rainbow table.
-"""+Red+"""[+]"""+Yellow+"""Hash Algorithm: """+", ".join(algo)+"""
-"""+Red+"""[+]"""+Yellow+"""Dictionary Path: """+dict_path+"""
+We will apply """+Underline+", ".join(algo)+Reset+Yellow+""" algorithms in the """+Underline+dict_path.split("/")[-1]+Reset+Yellow+""" dictionary to get our rainbow table.
+"""+Green+"""[+]"""+Yellow+"""Hash Algorithm: """+", ".join(algo)+"""
+"""+Green+"""[+]"""+Yellow+"""Dictionary Path: """+dict_path+"""
 """+Cyan)
     print("Do you want to continue ?")
     continu = input("(yes/no)>>> ") # Continue ?
@@ -282,6 +307,135 @@ We will apply """+Blue+", ".join(algo)+Yellow+""" algorithms in the """+Blue+dic
 
 ## Create Rainbow table from Dictionary #########################################################################################################################
 #################################################################################################################################################################
+
+def select_hash_file():
+    out = False
+    while not out:
+        print(Cyan + banner()[2])
+        print("Crack your hashs password with rainbow tables")
+        print("To crack hash password you must generate rainbow table firstly")
+        print("If your are not rainbow tables corresponding to your hash fonction you should create it to crack password")
+        print("To generate rainbow table you should give your dictionary file in argument of the option 1 \n" + Magenta + "\"1- Create Rainbow Table from dictionary\"" + Cyan + " of home page")
+        print("\nEnter your hashs file\n")
+        hash_file = input(">>> ")
+        if Path(hash_file).is_file(): # Check if file exist
+            return hash_file # return it
+        else:
+            clear_term()
+            print(Red+"This file not found (Enter correct path of file)"+Cyan) # Try again
+
+
+def select_rainbow_tables_lists():
+    """print(Cyan + banner()[2])  # Print Banner
+    print("Crack your hashes password with rainbow tables")
+    print("To crack hash password you must generate rainbow table firstly")"""
+    error = True
+    while error:
+        print("\nSelect your rainbow table")
+        print("You can select multiple rainbow table by separate with space. If you want to select other table you can enter full path of this")
+        print("ex: >>> 1 2 /home/user/rbt/rbt1.txt 5 (This exemple well choice rainbow table 1, 2, 5 in the display rainbow table list and other rainbow table locate at \"/home/user/rbt/rbt1.txt\")")
+        print("Also you can enter \"all\" to select all rainbow table display in list")
+
+        rainbow_tables_dir = os.getcwd() + "/rainbow_tables_lists/"
+        for (current_dir, list_dir, files) in os.walk(rainbow_tables_dir):
+            file = sorted(files)
+        #rainbow_tables_list_file = sorted(rainbow_tables_list_file)
+        #print(rainbow_tables_list_file)
+        print("\nList of hashes")
+        if len(file) == 0:
+            print(Red+"\t\t\tNo Rainbow Table in directory rainbow_tables_lists :("+Cyan)
+            print("\n")
+        else:
+            i = 0
+            print(White)
+            rainbow_tables_list_file = []
+            for r in file:
+                i = i + 1
+                rainbow_tables_list_file.append(str(rainbow_tables_dir + r))
+                print("  "+str(i) + "= "+ str(rainbow_tables_dir + r))
+            print(Cyan+"\n")
+
+        rbt_choice = input(">>> ")
+        rbt_choice = rbt_choice.split(" ")
+        rbt_list = []
+        for rbt_c in rbt_choice:
+            try:
+                if rbt_c == "all": # If we want all algorithm
+                    for i in rainbow_tables_list_file:
+                        rbt_list.append(i)
+                        error = False
+                else: # Else
+                    try:
+                        if int(rbt_c) > 0 and int(rbt_c) <= len(rainbow_tables_list_file):
+                            r = rainbow_tables_list_file[int(rbt_c)-1]
+                            rbt_list.append(r)
+                            error = False
+                        else:
+                            error = True
+                            clear_term()
+                            print(Red+"Your input is incorrect.."+Cyan)
+                    except:
+                        if Path(rbt_c).exists():
+                            rbt_list.append(rbt_c)
+                            error = False
+                        else:
+                            error = True
+                            clear_term()
+                            print(Red+"Your input is incorrect.."+Cyan)
+            except:
+                error = True
+                clear_term()
+                print(Red+"Something is Wrong..."+Cyan)
+    return rbt_list # We return list of hash
+
+
+def cracking(hash_file, rainbow_tables_lists):
+    encoding = get_encoding(hash_file)
+    with open(hash_file, "r", encoding=encoding, errors="ignore") as hash_f:
+        hashes = [i.split("\n")[0] for i in hash_f.readlines()]
+        end = False
+        #print(hashes)
+    #print(rainbow_tables_lists)
+    num_rbt = 0
+    len_rbtl = len(rainbow_tables_lists)
+    print("\nCracking Started...")
+    founded = os.getcwd() + "/cracked_" + hash_file.split("/")[-1]
+    with open(founded, "w", encoding="utf-8") as fou:
+        for rbtl in rainbow_tables_lists:
+            num_rbt = num_rbt + 1
+            print("\n"+"["+str(num_rbt)+"/"+str(len_rbtl)+"] "+rbtl)
+            encoding2 = get_encoding(rbtl)
+            with open(rbtl, "r", encoding=encoding2, errors="ignore") as rbt_f:
+                print("[*] Loading ", end="")
+                rbt_l = rbt_f.readlines()
+                print(Green+"OK"+Cyan)
+                start_time = str(datetime.now()).split(".")[0]
+                print("[*] Starting: " + start_time)
+                for rbt in rbt_l:
+                    for hash in hashes:
+                        if hash == rbt.split("\n")[0].split("\t\t")[0]:
+                            password = "\t\t".join(rbt.split("\n")[0].split("\t\t")[1:])
+                            print(Red+"Found: " + Green + hash + Cyan + "\t<<==>>\t" + Green + password + Cyan)
+                            fou.write(hash+"\t\t"+password+"\n")
+                            hashes.remove(hash)
+                    if len(hashes) == 0:
+                        end = True
+                        break
+                end_time = str(datetime.now()).split(".")[0]
+                print("End: " + end_time)
+                if end:
+                    break
+        print("\nYou can found file cracked output in: " + Blue + Underline + founded + Reset + Cyan)
+        if len(hashes) != 0:
+            print(Red+"\n[x] Hash not Found\n"+Cyan)
+            for k in hashes:
+                print(Red+"[-] " + Cyan + k)
+    print()
+    input("Tap Enter to Finish: ")
+
+
+
+
 def crack_hash():
     out = False # We initialize Out at False
     while not out:
@@ -295,6 +449,7 @@ def crack_hash():
         choix = input(">>> ") # Select if we want to continue or return
         try:
             if int(choix) == 1: # Continue
+                clear_term()
                 out = True
             elif int(choix) == 99: # Return
                 return ""
@@ -304,6 +459,33 @@ def crack_hash():
         except: # Something is wrong
             clear_term()
             out = False
+    hash_file = select_hash_file()
+    rainbow_tables_lists = select_rainbow_tables_lists()
+    print("\nGreat, it's already done :)")
+    print(Yellow)
+    print("=========================================================================================================")
+    print("================================================ Summary ================================================")
+    print("= [*] Your Hashes passwords files")
+    print("= \t"+hash_file)
+
+    print("= [*] Yours Rainbow Table lists:")
+    for i in rainbow_tables_lists:
+        print("= \t"+i)
+    print("=========================================================================================================")
+    print("=========================================================================================================")
+    print(Cyan)
+    ok = False
+    while not ok:
+        print("\n1- Start cracking\n99- Abort")
+        choix = input(">>> ")
+        if choix == "1":
+            ok = True
+        elif choix == "99":
+            return ""
+        else:
+            print(Red+"Your input is invalid"+Cyan)
+            ok = False
+    cracking(hash_file, rainbow_tables_lists)
 
 
 
@@ -313,7 +495,6 @@ def crack_hash():
 #################################################################################################################################################################
 def main():
     ban = banner()[0] # Display Banner
-
     clear_term()
     print(Cyan+ban)
     print("""
