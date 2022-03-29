@@ -2,23 +2,24 @@
 
 # DESCRIPTION
 
-RBTTool is a password cracking tool based on the principle of rainbow table, it can generate him own rainbow table that it use for cracking hashes.
-It can crack 19 types of hashes.
-It can crack password in using multiple rainbow table to expanse chance to found correct password.
+RBTTool is a password cracking tool based on the principle of rainbow table
+- It can generate him own rainbow table that it use for cracking hashes.
+- It can crack 19 types of hashes.
+- It can crack password in using multiple rainbow table to expanse chance to found correct password.
 
 # USAGE
 
 - Step 1: Installation
 
-**Download Tool**
+**Download the tool**
 ```
-git clone https://github.com/alexispondo/RBTTool.git
+$ git clone https://github.com/alexispondo/RBTTool.git
 ```
 
-**Launch tool**
+**Starting the tool**
 ```
-cd RBTTool
-python3 rbttool.py
+$ cd RBTTool
+$ python3 rbttool.py
 ```
 
 - Step 2: Found your hash algorithm
@@ -26,7 +27,7 @@ python3 rbttool.py
 Suppose you have a hash, and you want to find the resulting password.
 You will first need to find the hash algorithm used to hash the password.
 This step is not required, but it may make it easier to crack.
-To find it you can use hash-identifier or https://gchq.github.io/CyberChef/#recipe=Analyse_hash() online hash identifier
+To find it you can use hash-identifier or https://gchq.github.io/CyberChef/#recipe=Analyse_hash() online hash-identifier
 
 - Step 3: Create your dictionary
 
@@ -37,9 +38,9 @@ You can also download wordlists online or use wordlists in linux located in /usr
 
 For do it:
 
-**1- launch tool**
+**1- Start the tool**
 ```
-python3 rbttool.py
+$ python3 rbttool.py
 ```
 **2- Select option 1 (Create Rainbow Table from dictionary)**
 ```
@@ -96,7 +97,7 @@ After verification we know that the both first hashes is hashed by sha1 and the 
 
 **1- launch tool**
 ```
-python3 rbttool.py
+$ python3 rbttool.py
 ```
 **2- Select option 2 (Crack Hash by Rainbow Table)**
 ```
