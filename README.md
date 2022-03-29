@@ -116,7 +116,7 @@ For exemple:
 >>> /home/username/RBTTool/hashes.txt
 ```
 
-**5- Select your rainbow table that you want to use**
+**5- Select your rainbow tables that you want to use**
 
 here again you can choose multiple rainbow table
 
@@ -140,7 +140,7 @@ You can also enter specific rainbow table
 >>> 1
 ```
 
-After this we can check cracked_hashes.txt to view our hash cracked
+After this we can check output file cracked_hashes.txt to view our hash cracked
 
 
 # Additional
