@@ -278,7 +278,7 @@ We will apply """+Underline+", ".join(algo)+Reset+Yellow+""" algorithms in the "
 """+Green+"""[+]"""+Yellow+"""Dictionary Path: """+dict_path+"""
 """+Cyan)
     print("Do you want to continue ?")
-    continu = input("(yes/no)>>> ") # Continue ?
+    continu = input("(yes or  y / no or n)>>> ") # Continue ?
     while continu.lower() not in ["y", "n", "yes", "no"]:
         print("Do you want to continue ?")
         continu = input("(yes or y / no or n)>>> ")
@@ -360,7 +360,7 @@ def select_rainbow_tables_lists():
                             clear_term()
                             print(Red+"Your input is incorrect.."+Cyan)
                     except: # If other full path is entered
-                        if Path(rbt_c).exists(): # If path exist
+                        if Path(rbt_c).exists() and rbt_c != "": # If path exist
                             rbt_list.append(rbt_c) # we append it
                             error = False
                         else: # Else
