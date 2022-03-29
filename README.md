@@ -19,7 +19,8 @@ $ git clone https://github.com/alexispondo/RBTTool.git
 **Starting the tool**
 ```
 $ cd RBTTool
-$ python3 rbttool.py
+$ python installer.py
+$ python rbttool.py
 ```
 
 - Step 2: Found your hash algorithm
@@ -40,7 +41,7 @@ For do it:
 
 **1- Start the tool**
 ```
-$ python3 rbttool.py
+$ python rbttool.py
 ```
 **2- Select option 1 (Create Rainbow Table from dictionary)**
 ```
@@ -74,6 +75,7 @@ Here you can enter full path of your wordlist or just the name if you are in sam
 ```
 >>> /usr/share/wordlists/rockyou.txt
 ```
+
 **5- Enter yes to start generating**
 ```
 >>> yes
@@ -97,7 +99,7 @@ After verification we know that the both first hashes is hashed by sha1 and the 
 
 **1- launch tool**
 ```
-$ python3 rbttool.py
+$ python rbttool.py
 ```
 **2- Select option 2 (Crack Hash by Rainbow Table)**
 ```

@@ -9,7 +9,7 @@ from pathlib import Path
 import tempfile
 import itertools as IT
 import hashlib
-import magic
+import platform
 
 
 Black = "\u001b[30m"
@@ -23,6 +23,8 @@ White = "\u001b[37m"
 Reset = "\u001b[0m"
 
 Underline = "\u001b[4m"
+
+OS_platform = platform.system()
 #################################################################################################################################################################
 ####################### Somme importante function
 #################################################################################################################################################################
@@ -30,15 +32,16 @@ Underline = "\u001b[4m"
 
 # For clean terminal
 def clear_term():
-    try:
-        os.system("clear") # On linux
-    except:
+    if OS_platform != "Windows":
+        os.system("clear") # On Unix
+    else:
         os.system("cls") # On windows
 #################################################################################################################################################################
 
 # Get file encoging
 def get_encoding(file):
     try:
+        import magic
         return magic.Magic(mime_encoding=True).from_file(file)
     except:
         print("encoding not found for "+ file)
@@ -49,9 +52,9 @@ def get_encoding(file):
 
 # Get filename only
 def get_basename(path):
-    try:
+    if OS_platform != "Windows":
         file_name_base = path.split("/")[-1] # On linux
-    except:
+    else:
         file_name_base = path.split("\\")[-1] # On windows
     return file_name_base
 #################################################################################################################################################################
