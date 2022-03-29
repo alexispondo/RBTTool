@@ -329,7 +329,7 @@ def select_rainbow_tables_lists():
         for (current_dir, list_dir, files) in os.walk(rainbow_tables_dir):
             file = sorted(files) # get all rainbow table in dir rainbow_tables_lists
 
-        print("\nList of hashes")
+        print("\nList of rainbow table")
         if len(file) == 0: # If this directory is empty
             print(Red+"\t\t\tNo Rainbow Table in directory rainbow_tables_lists :("+Cyan)
             print("\n")
