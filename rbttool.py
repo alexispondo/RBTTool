@@ -15,6 +15,7 @@ import platform
 Black = "\u001b[30m"
 Red = "\u001b[31m"
 Green = "\u001b[32m"
+Bold_Green = "\u001b[1;92m"
 Yellow = "\u001b[33m"
 Blue = "\u001b[34m"
 Magenta = "\u001b[35m"
@@ -381,7 +382,7 @@ def select_rainbow_tables_lists():
 def cracking(hash_file, rainbow_tables_lists):
     encoding = get_encoding(hash_file) # We get encoding of file
     with open(hash_file, "r", encoding=encoding, errors="ignore") as hash_f:
-        hashes = [i.split("\n")[0] for i in hash_f.readlines()] # we get all hashes contains in file
+        hashes = [i.split("\n")[0].lower() for i in hash_f.readlines()] # we get all hashes contains in file
         end = False
         #print(hashes)
     #print(rainbow_tables_lists)
@@ -404,7 +405,7 @@ def cracking(hash_file, rainbow_tables_lists):
                     for hash in hashes: # for each hash of list of hashes
                         if hash == rbt.split("\n")[0].split("\t\t")[0]: # if hash is found
                             password = "\t\t".join(rbt.split("\n")[0].split("\t\t")[1:]) # we get password
-                            print(Red+"Found: " + Green + hash + Cyan + "\t<<==>>\t" + Green + password + Cyan)
+                            print(Bold_Green+"Found: " + Green + hash + Cyan + "\t<<==>>\t" + Green + password + Cyan)
                             fou.write(hash+"\t\t"+password+"\n") # we add it in hash founded file
                             hashes.remove(hash) # We remove it in list of hashes
                     if len(hashes) == 0: # Is all hashes are founded
