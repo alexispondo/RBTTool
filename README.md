@@ -1,5 +1,9 @@
 # TUTORIAL
 
+Click on the video to see the tutorial:
+
+[![How to use RBTTool ](https://user-images.githubusercontent.com/47490330/160823526-a1aacde9-5a39-45fc-b147-24733b1e135f.png)](https://youtu.be/e1rXlWEw6yw?t=1s "How to use RBTTool ")
+
 # DESCRIPTION
 
 RBTTool is a password cracking tool based on the principle of rainbow table
