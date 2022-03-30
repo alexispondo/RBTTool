@@ -2,7 +2,7 @@
 
 Click on the video to see the tutorial:
 
-[![How to use RBTTool ](https://user-images.githubusercontent.com/47490330/160823526-a1aacde9-5a39-45fc-b147-24733b1e135f.png)](https://youtu.be/e1rXlWEw6yw?t=1s "How to use RBTTool ")
+[![How to use RBTTool ](https://user-images.githubusercontent.com/47490330/160831652-4f1b6632-cc48-4a16-92bb-b2a1e6593291.png)](https://youtu.be/e1rXlWEw6yw?t=1s "How to use RBTTool ")
 
 # DESCRIPTION
 
