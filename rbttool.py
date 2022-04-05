@@ -340,7 +340,7 @@ def select_rainbow_tables_lists():
             file = sorted(files) # get all rainbow table in dir rainbow_tables_lists
 
         print("\nList of rainbow table")
-        if len(file) == 0: # If this directory is empty
+        if len(file) == 0 or not os.path.exists(rainbow_tables_dir): # If this directory is empty
             print(Red+"\t\t\tNo Rainbow Table in directory rainbow_tables_lists :("+Cyan)
             print("\n")
         else: # else
