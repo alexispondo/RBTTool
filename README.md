@@ -1,12 +1,16 @@
 # TUTORIAL
 
+Click on the video to see the tutorial:
+
+[![How to use RBTTool ](https://user-images.githubusercontent.com/47490330/160831652-4f1b6632-cc48-4a16-92bb-b2a1e6593291.png)](https://youtu.be/e1rXlWEw6yw?t=1s "How to use RBTTool ")
+
 # DESCRIPTION
 
 RBTTool is a password cracking tool based on the principle of rainbow table
 - It can generate him own rainbow table that it use for cracking hashes.
 - It can crack 19 types of hashes.
 - It can crack password in using multiple rainbow table to expanse chance to found correct password.
-
+- It work on windows, linux and other
 # USAGE
 
 - Step 1: Installation
