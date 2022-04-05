@@ -39,6 +39,15 @@ def clear_term():
         os.system("cls") # On windows
 #################################################################################################################################################################
 
+def our_input(mess):
+    if OS_platform != "Windows": # On Unix
+        from prompt_toolkit import prompt
+        r = prompt(mess)
+        return r
+    else: # On windows
+        r = input(mess)
+        return r
+
 # Get file encoging
 def get_encoding(file):
     try:
@@ -163,7 +172,7 @@ def choice_hash():
               "ex: >>> 1 2 3 (For choice md4, md5 and md5-sha1)\n"
               "If you want to choose all algorithm you should enter \"all\"\n"
               "ex: all (For choice all algorithm)")
-        hash0 = input(">>> ") # We enter our hashs chooses
+        hash0 = our_input(">>> ") # We enter our hashs chooses
 
 
         if hash0 == "all": # If we want all algorithm
@@ -196,7 +205,7 @@ def choice_dictionary_file():
     file_exist = False # We initialize at False
     while not file_exist:
         print("entrer the full path of your dictionary ex: /home/user/my/dict.txt")
-        dict_path = input(">>> ") # Enter dictionary file
+        dict_path = our_input(">>> ") # Enter dictionary file
         if Path(dict_path).is_file(): # Check if file exist
             return dict_path # return it
         else:
@@ -282,10 +291,10 @@ We will apply """+Underline+", ".join(algo)+Reset+Yellow+""" algorithms in the "
 """+Green+"""[+]"""+Yellow+"""Dictionary Path: """+dict_path+"""
 """+Cyan)
     print("Do you want to continue ?")
-    continu = input("(yes or  y / no or n)>>> ") # Continue ?
+    continu = our_input("(yes or  y / no or n)>>> ") # Continue ?
     while continu.lower() not in ["y", "n", "yes", "no"]:
         print("Do you want to continue ?")
-        continu = input("(yes or y / no or n)>>> ")
+        continu = our_input("(yes or y / no or n)>>> ")
     if continu.lower() in ["y", "yes"]: # If yes
         hash_dictionary(algo, dict_path) # We can start creation of rainbow table by dictionary and hash list
 #################################################################################################################################################################
@@ -308,7 +317,7 @@ def select_hash_file():
         print("If you want to know what is your hash")
         print("To generate rainbow table you should give your dictionary file in argument of the option 1 \n" + Magenta + "\"1- Create Rainbow Table from dictionary\"" + Cyan + " of home page")
         print("\nEnter your hash file\n")
-        hash_file = input(">>> ")
+        hash_file = our_input(">>> ")
         if Path(hash_file).is_file(): # Check if file exist
             return hash_file # return it
         else:
@@ -344,7 +353,7 @@ def select_rainbow_tables_lists():
                 print("  "+str(i) + "= "+ str(rainbow_tables_dir + r))
             print(Cyan+"\n")
 
-        rbt_choice = input(">>> ") # We do our choice
+        rbt_choice = our_input(">>> ") # We do our choice
         rbt_choice = rbt_choice.split(" ") # We trasform it in list contain number, "all", and/or other path
         rbt_list = [] # Initialization of real list with all full path of rainbow table
         for rbt_c in rbt_choice:
@@ -436,7 +445,7 @@ def crack_hash():
         print("To generate rainbow table you should give your dictionary file in argument of the option 1 \n" + Magenta + "\"1- Create Rainbow Table from dictionary\"" + Cyan + " of home page")
         print("\nif you are ready :) let's go !!!")
         print("\n1- continue\n99- return")
-        choix = input(">>> ") # Select if we want to continue or return
+        choix = our_input(">>> ") # Select if we want to continue or return
         try:
             if int(choix) == 1: # Continue
                 clear_term()
@@ -467,7 +476,7 @@ def crack_hash():
     ok = False
     while not ok:
         print("\n1- Start cracking\n99- Abort")
-        choix = input(">>> ") # Ask if we want to start cracking
+        choix = our_input(">>> ") # Ask if we want to start cracking
         if choix == "1":
             ok = True
         elif choix == "99":
@@ -491,7 +500,7 @@ def main():
 1- Create Rainbow Table from dictionary
 2- Crack Hash by Rainbow Table
 99- Exit""")
-    choix = input(">>> ") # Select Option
+    choix = our_input(">>> ") # Select Option
     while choix != "99": # While we not select exit
         clear_term()
         if choix == "1": # If we select create dictionary
@@ -505,6 +514,6 @@ def main():
 1- Create Rainbow Table from dictionary
 2- Crack Hash by Rainbow Table
 99- Exit""")
-        choix = input(">>> ")
+        choix = our_input(">>> ")
 
 main()
