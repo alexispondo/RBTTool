@@ -330,7 +330,7 @@ def select_hash_file():
 def select_rainbow_tables_lists():
     error = True
     while error:
-        print("\nSelect your rainbow table")
+        print(Cyan+"\nSelect your rainbow table")
         print("You can select multiple rainbow table by separate with space. If you want to select other table you can enter full path of this")
         print("ex: >>> 1 2 /home/user/rbt/rbt1.txt 5 (This exemple well choice rainbow table 1, 2, 5 in the display rainbow table list and other rainbow table locate at \"/home/user/rbt/rbt1.txt\")")
         print("Also you can enter \"all\" to select all rainbow table display in list")
