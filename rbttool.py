@@ -336,11 +336,16 @@ def select_rainbow_tables_lists():
         print("Also you can enter \"all\" to select all rainbow table display in list")
 
         rainbow_tables_dir = os.getcwd() + "/rainbow_tables_lists/" # dir of rainbow_tables_lists
+
+        if not os.path.exists(rainbow_tables_dir):
+            os.mkdir(rainbow_tables_dir)
+
         for (current_dir, list_dir, files) in os.walk(rainbow_tables_dir):
             file = sorted(files) # get all rainbow table in dir rainbow_tables_lists
 
+
         print("\nList of rainbow table")
-        if len(file) == 0 or not os.path.exists(rainbow_tables_dir): # If this directory is empty
+        if len(file) == 0: # If this directory is empty
             print(Red+"\t\t\tNo Rainbow Table in directory rainbow_tables_lists :("+Cyan)
             print("\n")
         else: # else
